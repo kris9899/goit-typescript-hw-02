@@ -1,0 +1,69 @@
+.wrapper {
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: solid 2px;
+  border-radius: 8px;
+  width: 300px;
+}
+.user {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.userAvatar {
+  margin-top: 20px;
+  margin-bottom: 16px;
+  background-color: black;
+  border-radius: 50px;
+}
+.userName {
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.userTag {
+  margin-bottom: 2px;
+  color: grey;
+}
+.userLocation {
+  margin-bottom: 8px;
+  color: grey;
+}
+.userInfo {
+  display: flex;
+  border-top: solid grey 2px;
+  background-color: lightgray;
+  width: 100%;
+
+  align-items: center;
+}
+.userInfoItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: solid 2px grey;
+  gap: 2px;
+  height: 100%;
+}
+.userInfoItem:last-child {
+  border-right: none;
+}
+.infoName {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  width: 100%;
+  align-content: center;
+}
+.infoData {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
