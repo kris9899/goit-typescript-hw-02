@@ -8,15 +8,10 @@ import Notification from './Notification/Notification';
 export default function App() {
   const [feedback, setFeedback] = useState(() => {
     const savedFeedback = localStorage.getItem('feedback');
-    if (savedFeedback) {
-      return JSON.parse(savedFeedback);
-    } else {
-      return {
-        good: 0,
-        neutral: 0,
-        bad: 0,
-      };
-    }
+
+    return savedFeedback
+      ? JSON.parse(savedFeedback)
+      : { good: 0, neutral: 0, bad: 0 };
   });
   useEffect(() => {
     localStorage.setItem('feedback', JSON.stringify(feedback));
