@@ -1,0 +1,28 @@
+.buttonsList {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+.optionButton {
+  width: 100px;
+  color: fuchsia;
+  background-color: pink;
+  border: none;
+  outline: none;
+  transition: background-color 0.3s, transform 0.2s;
+}
+.optionButton:hover {
+  background-color: #ff66b2;
+}
+
+.optionButton:active {
+  background-color: #ff3385;
+  transform: scale(0.95);
+  border: none;
+  outline: none;
+}
+.optionButton:focus {
+  outline: none;
+}

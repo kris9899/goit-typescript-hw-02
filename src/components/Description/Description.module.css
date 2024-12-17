@@ -1,0 +1,24 @@
+body {
+  background-color: palevioletred;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  margin: 100px auto 30px;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 70px;
+  color: bisque;
+}
+.description {
+  width: 500px;
+  font-size: 24px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 25px;
+  color: lightgoldenrodyellow;
+}
