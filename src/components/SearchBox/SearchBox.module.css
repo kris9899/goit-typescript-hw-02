@@ -1,0 +1,31 @@
+.searchBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.labelSearchBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  color: blue;
+  font-size: 16px;
+  font-weight: 600;
+}
+.inputSearchBox {
+  padding-left: 12px;
+  width: 300px;
+  height: 30px;
+  border: solid 2px blue;
+  border-radius: 8px;
+  background-color: lightblue;
+  color: blanchedalmond;
+  transition: background-color 0.3s, color 0.3s;
+}
+.inputSearchBox:hover,
+.inputSearchBox:focus,
+.inputSearchBox:active {
+  background-color: darkblue;
+  color: blanchedalmond;
+}
