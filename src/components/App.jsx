@@ -1,48 +1,38 @@
 import { useState, useEffect } from 'react';
-
-import Options from './Options/Options';
-import { Description } from './Description/Description';
-import Feedback from './Feedback/Feedback';
-import Notification from './Notification/Notification';
+import contactsInfo from '../Data/contacts.json';
+import ContactList from './ContactList/ContactList';
+import SearchBox from './SearchBox/SearchBox';
+import ContactForm from './ContactForm/ContactForm';
+import { nanoid } from 'nanoid';
 
 export default function App() {
-  const [feedback, setFeedback] = useState(() => {
-    const savedFeedback = localStorage.getItem('feedback');
-
-    return savedFeedback
-      ? JSON.parse(savedFeedback)
-      : { good: 0, neutral: 0, bad: 0 };
-  });
-  useEffect(() => {
-    localStorage.setItem('feedback', JSON.stringify(feedback));
-  }, [feedback]);
-
-  const handleReset = () => {
-    setFeedback({ good: 0, neutral: 0, bad: 0 });
+  const [contacts, setContacts] = useState(
+    JSON.parse(localStorage.getItem('contacts')) ?? contactsInfo
+  );
+  const [search, setSearch] = useState('');
+  useEffect(
+    () => localStorage.setItem('contacts', JSON.stringify(contacts)),
+    [contacts]
+  );
+  const visibleContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(search.toLowerCase())
+  );
+  const addContact = (values, actions) => {
+    const newContact = {
+      ...values,
+      id: nanoid(),
+    };
+    setContacts(prev => [...prev, newContact]);
+    actions.resetForm();
   };
-  const updateFeedback = feedbackType => {
-    setFeedback(prev => ({ ...prev, [feedbackType]: prev[feedbackType] + 1 }));
-  };
-  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-  const positiveFeedback = Math.round((feedback.good / totalFeedback) * 100);
-
+  const contactDelete = contactId =>
+    setContacts(prev => prev.filter(({ id }) => id !== contactId));
   return (
-    <>
-      <Description />
-      <Options
-        onFeedback={updateFeedback}
-        onReset={handleReset}
-        totalFeedback={totalFeedback}
-      />
-      {totalFeedback > 0 ? (
-        <Feedback
-          feedback={feedback}
-          totalFeedback={totalFeedback}
-          positiveFeedback={positiveFeedback}
-        />
-      ) : (
-        <Notification message="No feedback yet" />
-      )}
-    </>
+    <div>
+      <h1>Phonebook</h1>
+      <ContactForm handleSubmit={addContact} />
+      <SearchBox value={search} onFilter={setSearch} />
+      <ContactList contacts={visibleContacts} handleDelete={contactDelete} />
+    </div>
   );
 }
