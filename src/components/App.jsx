@@ -1,38 +1,84 @@
 import { useState, useEffect } from 'react';
-import contactsInfo from '../Data/contacts.json';
-import ContactList from './ContactList/ContactList';
-import SearchBox from './SearchBox/SearchBox';
-import ContactForm from './ContactForm/ContactForm';
-import { nanoid } from 'nanoid';
+import { fetchImages } from '../services/api';
+
+import SearchBar from './SearchBar/SearchBar';
+import ImageGallery from './ImageGallery/ImageGallery';
+import toast from 'react-hot-toast';
+import Loader from './Loader/Loader';
+import ErrorMessage from './ErrorMessage/ErrorMessage';
+import LoadMoreBtn from './LoadMoreBtn/LoadMore';
+import ImageModal from './ImageModal/ImageModal';
 
 export default function App() {
-  const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem('contacts')) ?? contactsInfo
-  );
-  const [search, setSearch] = useState('');
-  useEffect(
-    () => localStorage.setItem('contacts', JSON.stringify(contacts)),
-    [contacts]
-  );
-  const visibleContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(search.toLowerCase())
-  );
-  const addContact = (values, actions) => {
-    const newContact = {
-      ...values,
-      id: nanoid(),
+  const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState('');
+  const [totalPages, setTotalPages] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    const getImagesData = async () => {
+      if (!query) return;
+      try {
+        setIsLoading(true);
+        setIsError(false);
+        const data = await fetchImages(query, page);
+        setImages(prev => [...prev, ...data.results]);
+        setTotalPages(data.total_pages);
+      } catch (error) {
+        setIsError(true);
+        console.log(error);
+        toast.error('Something went wrong! Please try again...');
+      } finally {
+        setIsLoading(false);
+      }
     };
-    setContacts(prev => [...prev, newContact]);
-    actions.resetForm();
+    getImagesData();
+  }, [page, query]);
+
+  const handleChangePage = () => {
+    if (page < totalPages) {
+      setPage(prev => prev + 1);
+    }
   };
-  const contactDelete = contactId =>
-    setContacts(prev => prev.filter(({ id }) => id !== contactId));
+  const handleImageClick = image => {
+    setSelectedImage(image);
+    setIsModalOpen(true);
+  };
+  const handleChangeQuery = newQuery => {
+    if (newQuery === query) {
+      toast.error('Please change query');
+      return;
+    }
+    setQuery(newQuery);
+    setImages([]);
+    setPage(1);
+  };
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+  };
   return (
     <div>
-      <h1>Phonebook</h1>
-      <ContactForm handleSubmit={addContact} />
-      <SearchBox value={search} onFilter={setSearch} />
-      <ContactList contacts={visibleContacts} handleDelete={contactDelete} />
+      <SearchBar onSubmit={handleChangeQuery} />
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
+      {images && images.length > 0 && (
+        <ImageGallery images={images} handleIsOpen={handleImageClick} />
+      )}
+      {images && images.length > 0 && page < totalPages && (
+        <LoadMoreBtn handleChangePage={handleChangePage} />
+      )}
+      {selectedImage && (
+        <ImageModal
+          isOpen={isModalOpen}
+          image={selectedImage}
+          onClose={handleModalClose}
+        />
+      )}
     </div>
   );
 }

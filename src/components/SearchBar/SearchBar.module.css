@@ -1,0 +1,45 @@
+.headerSearchBar {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  margin: 50px auto 10px;
+  background-color: darkblue;
+  width: 100%;
+  height: 45px;
+}
+.formSearchBar {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.inputSearcBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  padding-left: 8px;
+  width: 380px;
+  height: 40px;
+  font-size: 18px;
+  border: none;
+}
+.buttonSearchBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  background-color: #fff;
+}
+@media screen and (max-width: 768px) {
+  .input {
+    padding: 8px 12px;
+    width: 280px;
+  }
+}
