@@ -27,7 +27,7 @@ export default function App() {
         setIsLoading(true);
         setIsError(false);
         const data = await fetchImages(query, page);
-        setImages(prev => [...prev, ...data.results]);
+        setImages(prev => [...prev, ...(data.results as Image[])]);
         setTotalPages(data.total_pages);
       } catch (error) {
         setIsError(true);

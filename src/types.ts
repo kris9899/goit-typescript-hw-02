@@ -3,7 +3,7 @@ export type URL = {
   small: string;
 };
 
-export type Image = {
+export interface Image {
   id: string;
   user: {
     name: string;
@@ -14,4 +14,4 @@ export type Image = {
     regular: string;
   };
   alt_description: string;
-};
+}

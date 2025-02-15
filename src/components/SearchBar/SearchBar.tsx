@@ -13,7 +13,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
     e.preventDefault();
     if (value.trim() === '') {
       toast.error('Search form needs to be fulfilled', {
-        style: { duration: 2000, position: 'top-right' },
+        duration: 2000,
+        position: 'top-right',
       });
       return;
     }
