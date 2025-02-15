@@ -1,6 +1,9 @@
 import css from './LoadMoreBtn.module.css';
 
-export default function LoadMoreBtn({ handleChangePage }) {
+interface LoadMoreBtnProps {
+  handleChangePage: () => void;
+}
+const LoadMoreBtn: React.FC<LoadMoreBtnProps> = ({ handleChangePage }) => {
   return (
     <div className={css.LoadMoreBtnWrap}>
       <button className={css.loadMoreBtn} onClick={handleChangePage}>
@@ -8,4 +11,6 @@ export default function LoadMoreBtn({ handleChangePage }) {
       </button>
     </div>
   );
-}
+};
+
+export default LoadMoreBtn;

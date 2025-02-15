@@ -1,23 +1,24 @@
 import { useState, useEffect } from 'react';
-import { fetchImages } from '../services/api';
+import { fetchImages } from '../../services/api';
+import { Image } from '../../types';
 
-import SearchBar from './SearchBar/SearchBar';
-import ImageGallery from './ImageGallery/ImageGallery';
+import SearchBar from '../SearchBar/SearchBar';
+import ImageGallery from '../ImageGallery/ImageGallery';
 import toast from 'react-hot-toast';
-import Loader from './Loader/Loader';
-import ErrorMessage from './ErrorMessage/ErrorMessage';
-import LoadMoreBtn from './LoadMoreBtn/LoadMore';
-import ImageModal from './ImageModal/ImageModal';
+import Loader from '../Loader/Loader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import LoadMoreBtn from '../LoadMoreBtn/LoadMore';
+import ImageModal from '../ImageModal/ImageModal';
 
 export default function App() {
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState('');
-  const [totalPages, setTotalPages] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [images, setImages] = useState<Image[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [query, setQuery] = useState<string>('');
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
   useEffect(() => {
     const getImagesData = async () => {
@@ -44,11 +45,11 @@ export default function App() {
       setPage(prev => prev + 1);
     }
   };
-  const handleImageClick = image => {
+  const handleImageClick = (image: Image) => {
     setSelectedImage(image);
     setIsModalOpen(true);
   };
-  const handleChangeQuery = newQuery => {
+  const handleChangeQuery = (newQuery: string) => {
     if (newQuery === query) {
       toast.error('Please change query');
       return;

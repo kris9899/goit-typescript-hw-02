@@ -3,7 +3,16 @@ import { useEffect } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa6';
 import css from './ImageModal.module.css';
-export default function ImageModal({ isOpen, image, onClose }) {
+import { Image } from '../../types';
+
+interface ImageModalProps {
+  isOpen: boolean;
+  image: Image;
+  onClose: () => void;
+}
+Modal.setAppElement('#root');
+
+const ImageModal: React.FC<ImageModalProps> = ({ isOpen, image, onClose }) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -15,11 +24,7 @@ export default function ImageModal({ isOpen, image, onClose }) {
     };
   }, [isOpen]);
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      appElement={document.getElementById('root')}
-    >
+    <Modal isOpen={isOpen} onRequestClose={onClose}>
       <div className={css.modalWrap}>
         <img
           className={css.imageModal}
@@ -39,4 +44,6 @@ export default function ImageModal({ isOpen, image, onClose }) {
       </div>
     </Modal>
   );
-}
+};
+
+export default ImageModal;

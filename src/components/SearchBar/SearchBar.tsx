@@ -2,14 +2,18 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Search } from 'lucide-react';
 import css from './SearchBar.module.css';
-export default function SearchBar({ onSubmit }) {
+
+interface SearchBarProps {
+  onSubmit: (query: string) => void;
+}
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
   const [value, setValue] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (value.trim() === '') {
       toast.error('Search form needs to be fulfilled', {
-        style: { duration: 2000, position: 'top - right' },
+        style: { duration: 2000, position: 'top-right' },
       });
       return;
     }
@@ -35,4 +39,6 @@ export default function SearchBar({ onSubmit }) {
       </form>
     </header>
   );
-}
+};
+
+export default SearchBar;

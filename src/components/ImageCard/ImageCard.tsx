@@ -1,6 +1,11 @@
 import css from './ImageCard.module.css';
+import { Image } from '../../types';
 
-export default function ImageCard({ image, handleIsOpen }) {
+interface ImageCardProps {
+  image: Image;
+  handleIsOpen: (image: Image) => void;
+}
+const ImageCard: React.FC<ImageCardProps> = ({ image, handleIsOpen }) => {
   return (
     <div className={css.ImageCardWrap}>
       <img
@@ -10,4 +15,5 @@ export default function ImageCard({ image, handleIsOpen }) {
       />
     </div>
   );
-}
+};
+export default ImageCard;
